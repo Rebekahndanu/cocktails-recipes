@@ -194,8 +194,32 @@ header .search {
 }
 
 /* Show the dropdown when hovering over the 'Categories' link */
-.navbar:hover .dropdown-menu {
+.navbar:hover .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+/* Add this CSS to your existing styles */
+
+.drink-card {
+    position: relative; /* Set position relative for proper positioning of the button */
+}
+
+.drink-card button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    opacity: 0; /* Initially hide the button */
+    transition: opacity 0.3s ease;
+}
+
+.drink-card:hover button {
+    opacity: 1; /* Show the button on hover */
 }
 
 
@@ -214,6 +238,18 @@ main {
     height: 300px;
     width: 300px;
 }
+.recipe-button-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+#featuredCocktail:hover .recipe-button-container {
+    display: block;
+}
+
 
 @media (max-width: 800px) 
 {

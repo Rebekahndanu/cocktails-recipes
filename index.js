@@ -26,7 +26,6 @@ menuToggle.onclick = function() {
     searchBtn.classList.remove('active');
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     // Fetch data for the home section (featured drink of the day)
     fetchFeaturedCocktail();
@@ -34,29 +33,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch categories and populate dropdown
     fetchCategories();
 
-    // Attach click event listener for categories dropdown
-    document.querySelector('.navbar').addEventListener('click', function (event) {
-        const dropdownToggle = event.target.closest('.dropdown-toggle');
+    // Add event listener for the "Categories" dropdown
+    document.querySelector('.dropdown-toggle').addEventListener('click', function (event) {
         const categoriesDropdown = document.getElementById('categoriesDropdown');
+        // Toggle the 'show' class on the categories dropdown
+        categoriesDropdown.classList.toggle('show');
+    });
 
-        if (dropdownToggle) {
-            // Toggle the 'show' class on the categories dropdown
-            categoriesDropdown.classList.toggle('show');
-        } else if (!categoriesDropdown.contains(event.target)) {
-            // Close the dropdown if a click occurs outside of the dropdown
+    // Close the dropdown if a click occurs outside of the dropdown
+    document.addEventListener('click', function (event) {
+        const categoriesDropdown = document.getElementById('categoriesDropdown');
+        if (!event.target.closest('.dropdown')) {
             categoriesDropdown.classList.remove('show');
         }
     });
 
-    // Add event listener for the "Categories" dropdown
-    document.getElementById('categoriesDropdown').addEventListener('click', function (event) {
-        const selectedCategory = event.target.textContent;
-        // Fetch and display drinks for the selected category dynamically
-        fetchCocktailsByCategory(selectedCategory);
+    // Add click event listener to the anchor tags inside the dropdown
+    document.querySelectorAll('.navbar .dropdown-menu a').forEach(function (anchor) {
+        anchor.addEventListener('click', function () {
+            const selectedCategory = anchor.textContent;
+            // Fetch and display drinks for the selected category dynamically
+            fetchCocktailsByCategory(selectedCategory);
+            // Close the dropdown
+            document.getElementById('categoriesDropdown').classList.remove('show');
+        });
+    });
+
+    // Add event listener to the "Get Recipe" button
+    document.querySelectorAll('.drink-card button').forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            // Prevent the default click behavior (e.g., following a link)
+            event.preventDefault();
+
+            // Access the drink ID from the data attribute or any other way you store it
+            const drinkId = button.getAttribute('data-drink-id');
+
+            // Call a function to display the recipe using the drink ID
+            displayRecipe(drinkId);
+        });
     });
 });
-
-
 
 function fetchCategories() {
     // Fetch categories from the API
@@ -71,7 +87,7 @@ function fetchCategories() {
                 const anchor = document.createElement('a');
                 anchor.href = '#';
                 anchor.textContent = category.strCategory;
-                
+
                 // Add click event listener to the anchor tag
                 anchor.addEventListener('click', function () {
                     handleCategoryClick(category.strCategory);
@@ -107,19 +123,16 @@ function fetchCocktailsByCategory(category) {
         });
 }
 
-
-
 function fetchFeaturedCocktail() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
-    .then(resp => resp.json())
-    .then(data => {
-        // console.log(data);
-        displayFeaturedCocktail(data);
-    })
-    .catch(error => {
-        console.error(error);
-
-    });
+        .then(resp => resp.json())
+        .then(data => {
+            // Display the featured cocktail
+            displayFeaturedCocktail(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }
 
 function displayFeaturedCocktail(cocktail) {
@@ -137,34 +150,37 @@ function displayFeaturedCocktail(cocktail) {
 
     featuredCocktail.appendChild(cocktailName);
 
-    
+    // Add a container for the "Get Recipe" button
+    let buttonContainer = document.createElement('div');
+    buttonContainer.classList.add('recipe-button-container');
 
     // Create a button
     let recipeButton = document.createElement('button');
     recipeButton.textContent = 'Get Recipe';
- 
+    recipeButton.setAttribute('data-drink-id', cocktail.drinks[0].idDrink); // Set the drink ID as a data attribute
+
     // Add a click event listener to the button
     recipeButton.addEventListener('click', function () {
-         // Call a function to display the recipe
-         displayRecipe(cocktail.drinks[0].idDrink);
+        // Call a function to display the recipe
+        displayRecipe(cocktail.drinks[0].idDrink);
     });
- 
-    // Append the button to the featuredCocktail container
-    featuredCocktail.appendChild(recipeButton);
+
+    // Append the button to the container
+    buttonContainer.appendChild(recipeButton);
+
+    // Append the button container to the featuredCocktail container
+    featuredCocktail.appendChild(buttonContainer);
+
+    // Add event listeners for showing/hiding the button on hover
+    featuredCocktail.addEventListener('mouseenter', function () {
+        recipeButton.style.display = 'block';
+    });
+
+    featuredCocktail.addEventListener('mouseleave', function () {
+        recipeButton.style.display = 'none';
+    });
 }
 
-function fetchCocktailsByCategory(category) {
-    // Fetch drinks from the API based on the selected category
-    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`)
-        .then(resp => resp.json())
-        .then(data => {
-            // Display the drinks on the page
-            displayCocktails(data);
-        })
-        .catch(error => {
-            console.error(error);
-        });
-}
 
 function displayCocktails(cocktails) {
     // Clear the existing content
@@ -189,6 +205,7 @@ function displayCocktails(cocktails) {
         // Create a button for more details or recipe
         const detailsButton = document.createElement('button');
         detailsButton.textContent = 'Get Recipe';
+        detailsButton.setAttribute('data-drink-id', drink.idDrink); // Set the drink ID as a data attribute
         detailsButton.addEventListener('click', function () {
             // Call a function to display the recipe
             displayRecipe(drink.idDrink);
@@ -198,5 +215,11 @@ function displayCocktails(cocktails) {
         // Append the drink card to the category content
         categoryContent.appendChild(drinkCard);
     });
+}
+
+function displayRecipe(drinkId) {
+    // Add your logic to display the recipe based on the drink ID
+    console.log(`Displaying recipe for drink with ID: ${drinkId}`);
+    // You can fetch additional details using the drinkId if needed
 }
 
