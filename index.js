@@ -1,3 +1,5 @@
+// Your existing JavaScript code
+
 let searchBtn = document.querySelector('.searchBtn');
 let closeBtn = document.querySelector('.closeBtn');
 let searchBox = document.querySelector('.searchBox');
@@ -5,7 +7,7 @@ let header = document.querySelector('header');
 let navbar = document.querySelector('.navbar');
 let menuToggle = document.querySelector('.menuToggle');
 
-searchBtn.onclick = function(){
+searchBtn.onclick = function () {
     searchBox.classList.add('active');
     closeBtn.classList.add('active');
     searchBtn.classList.add('active');
@@ -13,13 +15,13 @@ searchBtn.onclick = function(){
     header.classList.remove('open');
 }
 
-closeBtn.onclick = function(){
+closeBtn.onclick = function () {
     searchBox.classList.remove('active');
     closeBtn.classList.remove('active');
     searchBtn.classList.remove('active');
     menuToggle.classList.remove('hide');
 }
-menuToggle.onclick = function() {
+menuToggle.onclick = function () {
     header.classList.toggle('open');
     searchBox.classList.remove('active');
     closeBtn.classList.remove('active');
@@ -48,17 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add click event listener to the anchor tags inside the dropdown
-    document.querySelectorAll('.navbar .dropdown-menu a').forEach(function (anchor) {
-        anchor.addEventListener('click', function () {
-            const selectedCategory = anchor.textContent;
-            // Fetch and display drinks for the selected category dynamically
-            fetchCocktailsByCategory(selectedCategory);
-            // Close the dropdown
-            document.getElementById('categoriesDropdown').classList.remove('show');
-        });
-    });
-
     // Add event listener to the "Get Recipe" button
     document.querySelectorAll('.drink-card button').forEach(function (button) {
         button.addEventListener('click', function (event) {
@@ -68,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Access the drink ID from the data attribute or any other way you store it
             const drinkId = button.getAttribute('data-drink-id');
 
-            // Call a function to display the recipe using the drink ID
+            // Call a function to display the recipe
             displayRecipe(drinkId);
         });
     });
@@ -181,7 +172,6 @@ function displayFeaturedCocktail(cocktail) {
     });
 }
 
-
 function displayCocktails(cocktails) {
     // Clear the existing content
     const categoryContent = document.getElementById('categoryContent');
@@ -217,9 +207,71 @@ function displayCocktails(cocktails) {
     });
 }
 
-function displayRecipe(drinkId) {
-    // Add your logic to display the recipe based on the drink ID
-    console.log(`Displaying recipe for drink with ID: ${drinkId}`);
-    // You can fetch additional details using the drinkId if needed
+// ... Your existing code ...
+
+function displayRecipeDetails(cocktail) {
+    // Create a modal container
+    const modalContainer = document.createElement('div');
+    modalContainer.classList.add('modal-container');
+
+    // Create the modal content
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+
+    // Add a close button to the modal
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.addEventListener('click', () => {
+        // Remove the modal when the close button is clicked
+        document.body.removeChild(modalContainer);
+    });
+
+    // Display detailed recipe information in the modal
+    const modalContentHTML = `
+        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="modal-image">
+        <h2>${cocktail.strDrink}</h2>
+        <ul>
+            ${generateIngredientsList(cocktail)}
+        </ul>
+        <p>${cocktail.strInstructions}</p>
+    `;
+
+    modalContent.innerHTML = modalContentHTML;
+
+    // Append the close button and modal content to the modal container
+    modalContainer.appendChild(closeButton);
+    modalContainer.appendChild(modalContent);
+
+    // Append the modal container to the body
+    document.body.appendChild(modalContainer);
 }
 
+function generateIngredientsList(cocktail) {
+    let ingredientsList = '';
+
+    for (let i = 1; i <= 15; i++) {
+        const ingredient = cocktail[`strIngredient${i}`];
+        const measure = cocktail[`strMeasure${i}`];
+
+        if (ingredient && measure) {
+            ingredientsList += `<li>${measure} ${ingredient}</li>`;
+        } else if (ingredient) {
+            ingredientsList += `<li>${ingredient}</li>`;
+        }
+    }
+
+    return ingredientsList;
+}
+
+function displayRecipe(drinkId) {
+    // Add your logic to display the recipe based on the drink ID
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`)
+        .then(resp => resp.json())
+        .then(data => {
+            const cocktail = data.drinks[0];
+            displayRecipeDetails(cocktail);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
