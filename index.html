@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Cocktails Recipe Website</title>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">MixMaster</a>
+        <div class="group">
+                <ul class="navbar">
+                    <li><a href="#home">Home</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Categories</a>
+                        <div class="dropdown-menu" id="categoriesDropdown">
+                            <!-- Categories will be dynamically populated here -->
+                        </div>
+                    </li>
+                </ul>
+                <div class="search">
+                    <span class="icon">
+                        <ion-icon name="search-outline" class="searchBtn"></ion-icon>
+                        <ion-icon name="close-outline" class="closeBtn"></ion-icon> 
+                        <ion-icon name="menu-outline" class="menuToggle"></ion-icon>
+                    </span>
+                </div>
+                <div class="searchBox">
+                    <input type="text" placeholder="search ...">
+                </div>
+        </div>
+    </header>
+    <main>
+        <section id="home">
+            <h2>Featured Cocktail of the Day</h2>
+            <div id="featuredCocktail"></div>
+        </section>
+        
+        <section id="categories">
+            <h2>Categories</h2>
+            <div id="categoriesDropdown"></div>
+        </section>
+        <section id="categoryContent">
+            <!-- This is where the cocktails will be displayed -->
+        </section>
+    </main>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>
+
