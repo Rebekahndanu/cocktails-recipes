@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+
 // Inside fetchCategories function
 function fetchCategories() {
     // Fetch categories from the API
