@@ -1,36 +1,37 @@
 // Selecting DOM elements
-const searchBtn = document.querySelector('.searchBtn');
-const closeBtn = document.querySelector('.closeBtn');
-const searchBox = document.querySelector('.searchBox');
-const header = document.querySelector('header');
-const navbar = document.querySelector('.navbar');
-const menuToggle = document.querySelector('.menuToggle');
+let searchBtn = document.querySelector('.searchBtn');
+let closeBtn = document.querySelector('.closeBtn');
+let searchBox = document.querySelector('.searchBox');
+let header = document.querySelector('header');
+let navbar = document.querySelector('.navbar');
+let menuToggle = document.querySelector('.menuToggle');
 
-// Event handler for opening search box
+// Event handler for search button click
 searchBtn.onclick = function () {
     searchBox.classList.add('active');
     closeBtn.classList.add('active');
     searchBtn.classList.add('active');
     menuToggle.classList.add('hide');
     header.classList.remove('open');
-};
+}
 
-// Event handler for closing search box
+// Event handler for close button click
 closeBtn.onclick = function () {
     searchBox.classList.remove('active');
     closeBtn.classList.remove('active');
     searchBtn.classList.remove('active');
     menuToggle.classList.remove('hide');
-};
+}
 
-// Event handler for toggling mobile menu
+// Event handler for menu toggle click
 menuToggle.onclick = function () {
     header.classList.toggle('open');
     searchBox.classList.remove('active');
     closeBtn.classList.remove('active');
     searchBtn.classList.remove('active');
-};
+}
 
+// Document ready event listener
 document.addEventListener('DOMContentLoaded', () => {
     // Fetch data for the home section (featured drink of the day)
     fetchFeaturedCocktail();
@@ -38,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fetch categories and populate dropdown
     fetchCategories();
 
-    // Add event listener for the "Categories" dropdown toggle
+    // Add event listener for the "Categories" dropdown
     document.querySelector('.dropdown-toggle').addEventListener('click', function (event) {
         const categoriesDropdown = document.getElementById('categoriesDropdown');
         // Toggle the 'show' class on the categories dropdown
@@ -53,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Add event listener to the "Get Recipe" button for each drink card
+    // Add event listener to the "Get Recipe" button
     document.querySelectorAll('.drink-card button').forEach(function (button) {
         button.addEventListener('click', function (event) {
             // Prevent the default click behavior (e.g., following a link)
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Fetch and populate drink categories in the dropdown
+// Inside fetchCategories function
 function fetchCategories() {
     // Fetch categories from the API
     fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
@@ -104,7 +105,7 @@ function fetchCategories() {
         });
 }
 
-// Event handler for category selection
+// Function to handle category click
 function handleCategoryClick(selectedCategory) {
     // Handle the click event on list items
     console.log(`Category selected: ${selectedCategory}`);
@@ -117,7 +118,35 @@ function handleCategoryClick(selectedCategory) {
     categoryContentSection.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Display the selected category heading above the drinks
+// Function to fetch cocktails by category
+function fetchCocktailsByCategory(category) {
+    // Fetch drinks from the API based on the selected category
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`)
+        .then(resp => resp.json())
+        .then(data => {
+            // Display the drinks on the page
+            displaySelectedCategory(category);  // Add this line to display the selected category
+            displayCocktails(data);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+// Update the handleCategoryClick function
+function handleCategoryClick(selectedCategory) {
+    // Handle the click event on list items
+    console.log(`Category selected: ${selectedCategory}`);
+
+    // Add your logic to fetch and display drinks for the selected category
+    fetchCocktailsByCategory(selectedCategory);
+
+    // Scroll to the categoryContent section
+    const categoryContentSection = document.getElementById('categoryContent');
+    categoryContentSection.scrollIntoView({ behavior: 'smooth' });
+}
+
+// Function to display selected category
 function displaySelectedCategory(selectedCategory) {
     // Create a heading element for the selected category
     const selectedCategoryHeading = document.createElement('h2');
@@ -128,7 +157,7 @@ function displaySelectedCategory(selectedCategory) {
     categoryContentSection.parentNode.insertBefore(selectedCategoryHeading, categoryContentSection);
 }
 
-// Fetch a random featured cocktail for the home section
+// Function to fetch featured cocktail
 function fetchFeaturedCocktail() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
         .then(resp => resp.json())
@@ -141,7 +170,7 @@ function fetchFeaturedCocktail() {
         });
 }
 
-// Display the featured cocktail in the home section
+// Function to display featured cocktail
 function displayFeaturedCocktail(cocktail) {
     console.log(cocktail.drinks[0]);
 
@@ -196,7 +225,7 @@ function displayFeaturedCocktail(cocktail) {
     featuredCocktail.appendChild(buttonContainer);
 }
 
-// Display a list of cocktails in the categoryContent section
+// Function to display cocktails
 function displayCocktails(cocktails) {
     // Clear the existing content
     const categoryContent = document.getElementById('categoryContent');
@@ -220,7 +249,7 @@ function displayCocktails(cocktails) {
         // Create a button for more details or recipe
         const detailsButton = document.createElement('button');
         detailsButton.textContent = 'Get Recipe';
-        detailsButton.setAttribute('data-drink-id', drink.idDrink); 
+        detailsButton.setAttribute('data-drink-id', drink.idDrink); // Set the drink ID as a data attribute
         detailsButton.addEventListener('click', function () {
             // Call a function to display the recipe
             displayRecipe(drink.idDrink);
@@ -232,7 +261,7 @@ function displayCocktails(cocktails) {
     });
 }
 
-// Display detailed recipe information in a modal
+// Function to display recipe details
 function displayRecipeDetails(cocktail) {
     // Create a modal container
     const modalContainer = document.createElement('div');
@@ -272,7 +301,7 @@ function displayRecipeDetails(cocktail) {
     document.body.appendChild(modalContainer);
 }
 
-// Generate an HTML list of ingredients for a cocktail
+// Function to generate ingredients list
 function generateIngredientsList(cocktail) {
     let ingredientsList = '';
 
@@ -290,7 +319,7 @@ function generateIngredientsList(cocktail) {
     return ingredientsList;
 }
 
-// Fetch and display the recipe for a specific drink
+// Function to display recipe
 function displayRecipe(drinkId) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`)
         .then(resp => resp.json())
@@ -303,13 +332,13 @@ function displayRecipe(drinkId) {
         });
 }
 
-// Event listener for form submission to subscribe
+// Event listener for subscription form submission
 document.getElementById('subscriptionForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-
+    
     // POST subscriber to server
     fetch('http://localhost:3000/subscribers', {
         method: 'POST',
@@ -322,7 +351,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
     .then(data => {
         console.log('Subscription successful:', data);
         alert('Subscription successful!');
-        // Reset the form
+        // Reset form
         document.getElementById('subscriptionForm').reset();
     })
     .catch(error => {
@@ -330,5 +359,3 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
         alert('Error subscribing. Please try again.');
     });
 });
-
-  
