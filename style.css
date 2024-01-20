@@ -134,8 +134,7 @@ header .search {
 /* Style the home section */
 .home-section {
     text-align: center;
-    padding: 80px 20px; /* Adjust padding as needed */
-    background: linear-gradient(to bottom, #333, #5151f5);
+    padding: 80px 20px; 
     color: #fff;
 }
 
@@ -171,11 +170,10 @@ header .search {
     transform: translateY(-50%);
 }
 
-
+/* style the categories section */
 .categories-section {
     text-align: center;
-    padding: 80px 20px; /* Adjust padding as needed */
-    background: linear-gradient(to bottom, #5151f5, #333);
+    padding: 80px 20px; 
     color: #fff;
 }
 
@@ -194,18 +192,16 @@ header .search {
     margin-bottom: 40px;
 }
 
-/* Add this CSS to your existing styles */
-
 #categoryContent {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 20px; /* Adjust as needed for spacing */
+    margin-top: 20px; 
 }
 
 .drink-card {
-    width: 23%; /* Set the width to approximately 23% to fit four cards in a row */
-    margin-bottom: 20px; /* Adjust as needed for spacing */
+    width: 23%; 
+    margin-bottom: 20px; 
     box-sizing: border-box;
 }
 
@@ -222,7 +218,6 @@ header .search {
     margin-bottom: 5px;
 }
 
-/* Existing styles for .drink-card button */
 .drink-card button {
     background-color: #333;
     color: #fff;
@@ -231,35 +226,33 @@ header .search {
     cursor: pointer;
 }
 
-/* New styles for .drink-card button on hover */
 .drink-card:hover button {
-    opacity: 1; /* Show the button on hover */
+    opacity: 1; 
 }
-
 
 /* Styles for the dropdown container */
 .dropdown-menu {
     position: absolute;
-    top: 100%; /* Position below the parent element */
+    top: 100%; 
     left: 0;
-    z-index: 1000; /* Adjust as needed to ensure it appears above other elements */
-    display: none; /* Initially hide the dropdown */
-    background-color: #fff; /* Background color */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle lift */
-    border: 1px solid #ccc; /* Border for separation */
-    width: 100%; /* Full width */
+    z-index: 1000; 
+    display: none; 
+    background-color: #fff; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    border: 1px solid #ccc; 
+    width: 100%; 
 }
 
 /* Styles for list items within the dropdown */
 .dropdown-menu li {
     padding: 10px;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    transition: background-color 0.3s ease; 
 }
 
 /* Hover effect on list items */
 .dropdown-menu li:hover {
-    background-color: #f2f2f2; /* Light gray background on hover */
+    background-color: #f2f2f2; 
 }
 
 /* Show the dropdown when hovering over the 'Categories' link */
@@ -270,7 +263,7 @@ header .search {
 /* Add this CSS to your existing styles */
 
 .drink-card {
-    position: relative; /* Set position relative for proper positioning of the button */
+    position: relative; 
 }
 
 .drink-card button {
@@ -283,16 +276,13 @@ header .search {
     border: none;
     padding: 10px 15px;
     cursor: pointer;
-    opacity: 0; /* Initially hide the button */
+    opacity: 0; 
     transition: opacity 0.3s ease;
 }
 
 .drink-card:hover button {
-    opacity: 1; /* Show the button on hover */
+    opacity: 1; 
 }
-
-
-
 
 .menuToggle {
     position: relative;
@@ -319,8 +309,6 @@ main {
     display: block;
 }
 
-/* Your existing styles */
-
 /* Styles for the modal container */
 .modal-container {
     display: flex;
@@ -335,7 +323,6 @@ main {
     z-index: 1000;
 }
 
-/* Styles for the modal content */
 .modal-content {
     background: rgb(2, 2, 31);
     padding: 20px;
@@ -343,31 +330,18 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     max-width: 600px;
     width: 100%;
-    text-align: left; /* Adjust text alignment as needed */
+    text-align: left; 
     color: white;
 }
 
-/* Styles for the modal image */
-/* Styles for the modal image */
 .modal-image {
     width: 80%;
-    max-width: 300px; /* Adjust the maximum width as needed */
+    max-width: 300px; 
     height: auto;
     border-radius: 8px;
-    margin-bottom: 20px; /* Adjust spacing between image and details */
+    margin-bottom: 20px; 
 }
 
-
-/* Styles for the left side (image) of the modal */
-.modal-left {
-    flex: 0 0 40%; /* Adjust the width as needed */
-    margin-right: 20px; /* Adjust spacing between image and details */
-}
-
-/* Styles for the right side (details) of the modal */
-.modal-right {
-    flex: 1;
-}
 
 /* Close button styles */
 .modal-content button {
@@ -417,21 +391,6 @@ main {
     font-size: 16px;
     margin-top: 20px;
 }
-
-
-
-/* Media query for responsiveness */
-@media (max-width: 800px) {
-    /* Adjust styles for smaller screens if needed */
-    .modal-left {
-        display: none; /* Hide the image on smaller screens */
-    }
-    .modal-right {
-        flex: 1; /* Take full width on smaller screens */
-    }
-}
-
-
 
 @media (max-width: 800px) 
 {

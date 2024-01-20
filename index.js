@@ -116,6 +116,7 @@ function fetchCocktailsByCategory(category) {
         .then(resp => resp.json())
         .then(data => {
             // Display the drinks on the page
+            displaySelectedCategory(category);  // Add this line to display the selected category
             displayCocktails(data);
         })
         .catch(error => {
@@ -136,6 +137,15 @@ function handleCategoryClick(selectedCategory) {
     categoryContentSection.scrollIntoView({ behavior: 'smooth' });
 }
 
+function displaySelectedCategory(selectedCategory) {
+    // Create a heading element for the selected category
+    const selectedCategoryHeading = document.createElement('h2');
+    selectedCategoryHeading.textContent = `Selected Category: ${selectedCategory}`;
+
+    // Insert the heading above the categoryContent section
+    const categoryContentSection = document.getElementById('categoryContent');
+    categoryContentSection.parentNode.insertBefore(selectedCategoryHeading, categoryContentSection);
+}
 
 function fetchFeaturedCocktail() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
@@ -299,6 +309,7 @@ function displayRecipe(drinkId) {
         });
 }
 
+
 document.getElementById('subscriptionForm').addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -325,5 +336,5 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
       console.error('Error subscribing:', error);
       alert('Error subscribing. Please try again.');
     });
-  });
+});
   
