@@ -354,13 +354,29 @@ main {
     background-color: #555;
 }
 
-#subscriptionForm {
+/* subscription */
+#subscriptionSection {
+    text-align: center;
+}
+
+.subscription-content {
     max-width: 400px;
     margin: 0 auto;
-    background-color: #333;
+    color: #fff; /* Text color is white */
+}
+
+#subscriptionForm {
+    max-width: 400px;
+    margin: 20px auto; /* Add margin between the content and the form */
+    background-color: rgb(34, 7, 95);
     padding: 20px;
     border-radius: 8px;
-    margin-top: 50px;
+}
+
+#subscriptionForm label {
+    display: block;
+    color: #fff;
+    margin-bottom: 6px;
 }
 
 #subscriptionForm input {
@@ -368,6 +384,10 @@ main {
     padding: 10px;
     margin-bottom: 16px;
     box-sizing: border-box;
+    border: 1px solid #fff; /* Add a border for better visibility */
+    border-radius: 4px;
+    background-color: #fff; /* Keep the input box white */
+    color: #333; /* Text color for input box */
 }
 
 #subscriptionForm button {
@@ -381,12 +401,46 @@ main {
 }
 
 #subscriptionForm button:hover {
-    background-color: #ccc;
+    background-color: rgb(106, 81, 165);
 }
 
 #subscriptionForm p {
     font-size: 16px;
     margin-top: 20px;
+    color: #fff; /* Set the text color to white */
+}
+
+/* Footer */
+footer {
+    background-color: #443986;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+}
+
+.contact-info i {
+    margin-right: 8px;
+}
+
+.phone, .email {
+    display: flex;
+    align-items: center;
+}
+
+.copyright {
+    font-size: 14px;
 }
 
 
