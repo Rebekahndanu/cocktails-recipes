@@ -65,33 +65,42 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Inside fetchCategories function
 function fetchCategories() {
     // Fetch categories from the API
     fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
         .then(resp => resp.json())
         .then(data => {
-            // Populate the categories dropdown dynamically
             const categoriesDropdown = document.getElementById('categoriesDropdown');
 
-            data.drinks.forEach(category => {
-                const listItem = document.createElement('li');
-                const anchor = document.createElement('a');
-                anchor.href = '#';
-                anchor.textContent = category.strCategory;
+            if (data.drinks.length === 0) {
+                // If there are no categories, display a message or add default content
+                const noCategoriesMessage = document.createElement('p');
+                noCategoriesMessage.textContent = 'No categories available at the moment.';
+                categoriesDropdown.appendChild(noCategoriesMessage);
+            } else {
+                // Populate the categories dropdown dynamically
+                data.drinks.forEach(category => {
+                    const listItem = document.createElement('li');
+                    const anchor = document.createElement('a');
+                    anchor.href = '#';
+                    anchor.textContent = category.strCategory;
 
-                // Add click event listener to the anchor tag
-                anchor.addEventListener('click', function () {
-                    handleCategoryClick(category.strCategory);
+                    // Add click event listener to the anchor tag
+                    anchor.addEventListener('click', function () {
+                        handleCategoryClick(category.strCategory);
+                    });
+
+                    listItem.appendChild(anchor);
+                    categoriesDropdown.appendChild(listItem);
                 });
-
-                listItem.appendChild(anchor);
-                categoriesDropdown.appendChild(listItem);
-            });
+            }
         })
         .catch(error => {
             console.error(error);
         });
 }
+
 
 function handleCategoryClick(selectedCategory) {
     // Handle the click event on list items
@@ -113,6 +122,20 @@ function fetchCocktailsByCategory(category) {
             console.error(error);
         });
 }
+
+// Update the handleCategoryClick function
+function handleCategoryClick(selectedCategory) {
+    // Handle the click event on list items
+    console.log(`Category selected: ${selectedCategory}`);
+
+    // Add your logic to fetch and display drinks for the selected category
+    fetchCocktailsByCategory(selectedCategory);
+
+    // Scroll to the categoryContent section
+    const categoryContentSection = document.getElementById('categoryContent');
+    categoryContentSection.scrollIntoView({ behavior: 'smooth' });
+}
+
 
 function fetchFeaturedCocktail() {
     fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
@@ -141,35 +164,35 @@ function displayFeaturedCocktail(cocktail) {
 
     featuredCocktail.appendChild(cocktailName);
 
-    // Add a container for the "Get Recipe" button
-    let buttonContainer = document.createElement('div');
-    buttonContainer.classList.add('recipe-button-container');
-
-    // Create a button
-    let recipeButton = document.createElement('button');
-    recipeButton.textContent = 'Get Recipe';
-    recipeButton.setAttribute('data-drink-id', cocktail.drinks[0].idDrink); // Set the drink ID as a data attribute
-
-    // Add a click event listener to the button
-    recipeButton.addEventListener('click', function () {
-        // Call a function to display the recipe
-        displayRecipe(cocktail.drinks[0].idDrink);
-    });
-
-    // Append the button to the container
-    buttonContainer.appendChild(recipeButton);
-
-    // Append the button container to the featuredCocktail container
-    featuredCocktail.appendChild(buttonContainer);
-
-    // Add event listeners for showing/hiding the button on hover
-    featuredCocktail.addEventListener('mouseenter', function () {
-        recipeButton.style.display = 'block';
-    });
-
-    featuredCocktail.addEventListener('mouseleave', function () {
-        recipeButton.style.display = 'none';
-    });
+        // Modify the container for the "Get Recipe" button
+        let buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('recipe-button-container');
+    
+        // Create a button
+        let recipeButton = document.createElement('button');
+        recipeButton.textContent = 'Get Recipe';
+        recipeButton.setAttribute('data-drink-id', cocktail.drinks[0].idDrink); // Set the drink ID as a data attribute
+    
+        // Add a click event listener to the button
+        recipeButton.addEventListener('click', function () {
+            // Call a function to display the recipe
+            displayRecipe(cocktail.drinks[0].idDrink);
+        });
+    
+        // Append the button to the container
+        buttonContainer.appendChild(recipeButton);
+    
+        // Append the button container to the featuredCocktail container
+        featuredCocktail.appendChild(buttonContainer);
+    
+        // Add event listeners for showing/hiding the button on hover
+        featuredCocktail.addEventListener('mouseenter', function () {
+            recipeButton.style.display = 'block';
+        });
+    
+        featuredCocktail.addEventListener('mouseleave', function () {
+            recipeButton.style.display = 'none';
+        });
 }
 
 function displayCocktails(cocktails) {

@@ -131,6 +131,69 @@ header .search {
     transform: scale(1);
 }
 
+/* Style the home section */
+.home-section {
+    text-align: center;
+    padding: 80px 20px; /* Adjust padding as needed */
+    background: linear-gradient(to bottom, #333, #5151f5);
+    color: #fff;
+}
+
+.home-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.home-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.motto {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
+/* Style the featured cocktail */
+#featuredCocktail {
+    margin-top: 50px;
+    text-align: center;
+}
+
+#featuredCocktail img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.recipe-button-container {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+.categories-section {
+    text-align: center;
+    padding: 80px 20px; /* Adjust padding as needed */
+    background: linear-gradient(to bottom, #5151f5, #333);
+    color: #fff;
+}
+
+.categories-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.categories-content h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.intro {
+    font-size: 1.2em;
+    margin-bottom: 40px;
+}
+
 /* Add this CSS to your existing styles */
 
 #categoryContent {
