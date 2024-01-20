@@ -1,35 +1,35 @@
 // Selecting DOM elements
-// let searchBtn = document.querySelector('.searchBtn');
-// let closeBtn = document.querySelector('.closeBtn');
-// let searchBox = document.querySelector('.searchBox');
+let searchBtn = document.querySelector('.searchBtn');
+let closeBtn = document.querySelector('.closeBtn');
+let searchBox = document.querySelector('.searchBox');
 let header = document.querySelector('header');
 let navbar = document.querySelector('.navbar');
-//let menuToggle = document.querySelector('.menuToggle');
+let menuToggle = document.querySelector('.menuToggle');
 
 // Event handler for search button click
-// searchBtn.onclick = function () {
-//     searchBox.classList.add('active');
-//     closeBtn.classList.add('active');
-//     searchBtn.classList.add('active');
-//     menuToggle.classList.add('hide');
-//     header.classList.remove('open');
-// }
+searchBtn.onclick = function () {
+    searchBox.classList.add('active');
+    closeBtn.classList.add('active');
+    searchBtn.classList.add('active');
+    menuToggle.classList.add('hide');
+    header.classList.remove('open');
+}
 
 // Event handler for close button click
-// closeBtn.onclick = function () {
-//     searchBox.classList.remove('active');
-//     closeBtn.classList.remove('active');
-//     searchBtn.classList.remove('active');
-//     menuToggle.classList.remove('hide');
-// }
+closeBtn.onclick = function () {
+    searchBox.classList.remove('active');
+    closeBtn.classList.remove('active');
+    searchBtn.classList.remove('active');
+    menuToggle.classList.remove('hide');
+}
 
 // Event handler for menu toggle click
-// menuToggle.onclick = function () {
-//     header.classList.toggle('open');
-//     searchBox.classList.remove('active');
-//     closeBtn.classList.remove('active');
-//     searchBtn.classList.remove('active');
-// }
+menuToggle.onclick = function () {
+    header.classList.toggle('open');
+    searchBox.classList.remove('active');
+    closeBtn.classList.remove('active');
+    searchBtn.classList.remove('active');
+}
 
 // Document ready event listener
 document.addEventListener('DOMContentLoaded', () => {
