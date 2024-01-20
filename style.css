@@ -439,6 +439,10 @@ footer {
     align-items: center;
 }
 
+.phone {
+    margin-right: 20px;
+}
+
 .copyright {
     font-size: 14px;
 }

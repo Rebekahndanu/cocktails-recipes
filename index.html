@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <!-- My icons -->
+    <script src="https://kit.fontawesome.com/089cfbb77d.js" crossorigin="anonymous"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <title>Cocktails Recipe Website</title>
 </head>
 <body>
@@ -13,7 +17,9 @@
             <ul class="navbar">
                 <li><a href="#home">Home</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle">Categories</a>
+                    <a href="#" class="dropdown-toggle">
+                        <span>Categories</span>
+                        <i class="fa-solid fa-caret-down"></i></a>
                     <div class="dropdown-menu" id="categoriesDropdown">
                         <ul>
                             <!-- Categories will be dynamically populated here -->
@@ -75,9 +81,11 @@
         <div class="footer-content">
             <div class="contact-info">
                 <div class="phone">
+                    <i class="fas fa-phone"></i>
                     <span>Phone: +254 123-4567</span>
                 </div>
                 <div class="email">
+                    <i class="fas fa-envelope"></i>
                     <span>Email: mixmaster@gmail.com</span>
                 </div>
             </div>
@@ -86,8 +94,6 @@
             </div>
         </div>
     </footer>    
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="index.js"></script>
 </body>
 </html>
