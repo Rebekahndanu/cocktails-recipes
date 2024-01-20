@@ -31,6 +31,105 @@ menuToggle.onclick = function () {
     searchBtn.classList.remove('active');
 }
 
+// Event handler for search form submission
+document.querySelector('.searchBox input').addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        // Call a function to handle the search
+        handleSearch();
+    }
+});
+
+// Event handler for search icon click (submit the search)
+searchBtn.addEventListener('click', function () {
+    handleSearch();
+});
+
+// Function to handle search
+function handleSearch() {
+    const searchTerm = document.querySelector('.searchBox input').value.trim();
+
+    if (searchTerm !== '') {
+        // Call a function to fetch and display the search results
+        fetchAndDisplaySearchResults(searchTerm);
+    }
+}
+
+// Function to fetch and display search results
+function fetchAndDisplaySearchResults(searchTerm) {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`)
+        .then(resp => resp.json())
+        .then(data => {
+            if (data.drinks && data.drinks.length > 0) {
+                const searchedCocktail = data.drinks[0];
+                displayRecipeDetails(searchedCocktail);
+            } else {
+                alert('No results found for the entered drink.');
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+// Function to display recipe details
+function displayRecipeDetails(cocktail) {
+    // Create a modal container
+    const modalContainer = document.createElement('div');
+    modalContainer.classList.add('modal-container');
+
+    // Create the modal content
+    const modalContent = document.createElement('div');
+    modalContent.classList.add('modal-content');
+
+    // Add a close button to the modal
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'Close';
+    closeButton.addEventListener('click', () => {
+        // Remove the modal when the close button is clicked
+        document.body.removeChild(modalContainer);
+    });
+
+    // Display detailed recipe information in the modal
+    const modalContentHTML = `
+        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="modal-image">
+        <h2>${cocktail.strDrink}</h2>
+        <h3>Ingredients</h3>
+        <ul>
+            ${generateIngredientsList(cocktail)}
+        </ul>
+        <h3>Instructions</h3>
+        <p>${cocktail.strInstructions}</p>
+    `;
+
+    modalContent.innerHTML = modalContentHTML;
+
+    // Append the close button and modal content to the modal container
+    modalContainer.appendChild(closeButton);
+    modalContainer.appendChild(modalContent);
+
+    // Append the modal container to the body
+    document.body.appendChild(modalContainer);
+}
+
+// Function to generate ingredients list
+function generateIngredientsList(cocktail) {
+    let ingredientsList = '';
+
+    for (let i = 1; i <= 15; i++) {
+        const ingredient = cocktail[`strIngredient${i}`];
+        const measure = cocktail[`strMeasure${i}`];
+
+        if (ingredient && measure) {
+            ingredientsList += `<li>${measure} ${ingredient}</li>`;
+        } else if (ingredient) {
+            ingredientsList += `<li>${ingredient}</li>`;
+        }
+    }
+
+    return ingredientsList;
+}
+
 // Document ready event listener
 document.addEventListener('DOMContentLoaded', () => {
     // Fetch data for the home section (featured drink of the day)
@@ -68,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-
 
 // Inside fetchCategories function
 function fetchCategories() {
@@ -144,6 +242,9 @@ function handleCategoryClick(selectedCategory) {
     // Scroll to the categoryContent section
     const categoryContentSection = document.getElementById('categoryContent');
     categoryContentSection.scrollIntoView({ behavior: 'smooth' });
+
+    // Display selected category
+    displaySelectedCategory(selectedCategory);
 }
 
 // Function to display selected category
@@ -225,7 +326,6 @@ function displayFeaturedCocktail(cocktail) {
     featuredCocktail.appendChild(buttonContainer);
 }
 
-
 // Function to display cocktails
 function displayCocktails(cocktails) {
     // Clear the existing content
@@ -262,64 +362,6 @@ function displayCocktails(cocktails) {
     });
 }
 
-// Function to display recipe details
-function displayRecipeDetails(cocktail) {
-    // Create a modal container
-    const modalContainer = document.createElement('div');
-    modalContainer.classList.add('modal-container');
-
-    // Create the modal content
-    const modalContent = document.createElement('div');
-    modalContent.classList.add('modal-content');
-
-    // Add a close button to the modal
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.addEventListener('click', () => {
-        // Remove the modal when the close button is clicked
-        document.body.removeChild(modalContainer);
-    });
-
-    // Display detailed recipe information in the modal
-    const modalContentHTML = `
-        <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="modal-image">
-        <h2>${cocktail.strDrink}</h2>
-        <h3>Ingredients</h3>
-        <ul>
-            ${generateIngredientsList(cocktail)}
-        </ul>
-        <h3>Instructions</h3>
-        <p>${cocktail.strInstructions}</p>
-    `;
-
-    modalContent.innerHTML = modalContentHTML;
-
-    // Append the close button and modal content to the modal container
-    modalContainer.appendChild(closeButton);
-    modalContainer.appendChild(modalContent);
-
-    // Append the modal container to the body
-    document.body.appendChild(modalContainer);
-}
-
-// Function to generate ingredients list
-function generateIngredientsList(cocktail) {
-    let ingredientsList = '';
-
-    for (let i = 1; i <= 15; i++) {
-        const ingredient = cocktail[`strIngredient${i}`];
-        const measure = cocktail[`strMeasure${i}`];
-
-        if (ingredient && measure) {
-            ingredientsList += `<li>${measure} ${ingredient}</li>`;
-        } else if (ingredient) {
-            ingredientsList += `<li>${ingredient}</li>`;
-        }
-    }
-
-    return ingredientsList;
-}
-
 // Function to display recipe
 function displayRecipe(drinkId) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`)
@@ -339,7 +381,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
 
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    
+
     // POST subscriber to server
     fetch('http://localhost:3000/subscribers', {
         method: 'POST',
