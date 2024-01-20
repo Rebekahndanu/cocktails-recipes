@@ -178,7 +178,7 @@ header .search {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #4CAF50;
+    background-color: #5151f5;
     color: white;
     padding: 10px;
     border: none;
@@ -253,7 +253,7 @@ header .search {
 }
 
 .drink-card button {
-    background-color: #4CAF50;
+    background-color: #5151f5;
     color: #fff;
     border: none;
     padding: 8px 16px;
@@ -268,7 +268,7 @@ header .search {
 }
 
 .drink-card:hover button {
-    background-color: #45a049;
+    background-color: #5151f5;
 }
 
 /* Styles for the dropdown container */
