@@ -1,5 +1,3 @@
-// Your existing JavaScript code
-
 let searchBtn = document.querySelector('.searchBtn');
 let closeBtn = document.querySelector('.closeBtn');
 let searchBox = document.querySelector('.searchBox');
@@ -297,7 +295,6 @@ function generateIngredientsList(cocktail) {
 }
 
 function displayRecipe(drinkId) {
-    // Add your logic to display the recipe based on the drink ID
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${drinkId}`)
         .then(resp => resp.json())
         .then(data => {
@@ -315,8 +312,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
 
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-
-    // Perform the AJAX request to add the subscriber to the server
+    // POST subscriber to server
     fetch('http://localhost:3000/subscribers', {
       method: 'POST',
       headers: {
@@ -328,8 +324,7 @@ document.getElementById('subscriptionForm').addEventListener('submit', function 
     .then(data => {
       console.log('Subscription successful:', data);
       alert('Subscription successful!');
-      
-      // Optionally, you can reset the form or perform other actions
+      // reset form
       document.getElementById('subscriptionForm').reset();
     })
     .catch(error => {
