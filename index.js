@@ -125,8 +125,7 @@ function fetchCocktailsByCategory(category) {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`)
         .then(resp => resp.json())
         .then(data => {
-            // Display the drinks on the page
-            displaySelectedCategory(category);  // Add this line to display the selected category
+            // Display the drinks on the page without showing the category name
             displayCocktails(data);
         })
         .catch(error => {
@@ -225,6 +224,7 @@ function displayFeaturedCocktail(cocktail) {
     // Append the button container to the featuredCocktail container
     featuredCocktail.appendChild(buttonContainer);
 }
+
 
 // Function to display cocktails
 function displayCocktails(cocktails) {
