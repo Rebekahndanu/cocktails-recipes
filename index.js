@@ -176,6 +176,11 @@ function displayFeaturedCocktail(cocktail) {
 
     let featuredCocktail = document.getElementById('featuredCocktail');
 
+    // Append label for featured drink of the day
+    let featuredLabel = document.createElement('p');
+    featuredLabel.innerHTML = 'Featured Drink';
+    featuredCocktail.appendChild(featuredLabel);
+
     let img = document.createElement('img');
     img.src = cocktail.drinks[0].strDrinkThumb;
 
@@ -184,12 +189,7 @@ function displayFeaturedCocktail(cocktail) {
     let cocktailName = document.createElement('h4');
     cocktailName.innerHTML = cocktail.drinks[0].strDrink;
 
-    // Append category name below cocktail name
-    let categoryName = document.createElement('p');
-    categoryName.innerHTML = `Category: ${cocktail.drinks[0].strCategory}`;
-
     featuredCocktail.appendChild(cocktailName);
-    featuredCocktail.appendChild(categoryName);
 
     // Modify the container for the "Get Recipe" button
     let buttonContainer = document.createElement('div');
