@@ -1,0 +1,19 @@
+{
+  "subscribers": [
+    {
+      "id": 1,
+      "name": "Woody",
+      "email": "woody@gmail.com"
+    },
+    {
+      "name": "Rebekah Ndanu",
+      "email": "rebekahndanu@gmail.com",
+      "id": 2
+    },
+    {
+      "name": "Mr. Star",
+      "email": "rebekahdaystar@gmail.com",
+      "id": 3
+    }
+  ]
+}

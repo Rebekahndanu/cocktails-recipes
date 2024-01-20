@@ -207,8 +207,6 @@ function displayCocktails(cocktails) {
     });
 }
 
-// ... Your existing code ...
-
 function displayRecipeDetails(cocktail) {
     // Create a modal container
     const modalContainer = document.createElement('div');
@@ -230,9 +228,11 @@ function displayRecipeDetails(cocktail) {
     const modalContentHTML = `
         <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="modal-image">
         <h2>${cocktail.strDrink}</h2>
+        <h3>Ingredients</h3>
         <ul>
             ${generateIngredientsList(cocktail)}
         </ul>
+        <h3>Instructions</h3>
         <p>${cocktail.strInstructions}</p>
     `;
 
@@ -275,3 +275,32 @@ function displayRecipe(drinkId) {
             console.error(error);
         });
 }
+
+document.getElementById('subscriptionForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+
+    // Perform the AJAX request to add the subscriber to the server
+    fetch('http://localhost:3000/subscribers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name, email }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Subscription successful:', data);
+      alert('Subscription successful!');
+      
+      // Optionally, you can reset the form or perform other actions
+      document.getElementById('subscriptionForm').reset();
+    })
+    .catch(error => {
+      console.error('Error subscribing:', error);
+      alert('Error subscribing. Please try again.');
+    });
+  });
+  
