@@ -324,7 +324,7 @@ main {
 }
 
 .modal-content {
-    background: rgb(2, 2, 31);
+    background: rgb(106, 81, 165);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -342,8 +342,6 @@ main {
     margin-bottom: 20px; 
 }
 
-
-/* Close button styles */
 .modal-content button {
     background-color: #333;
     color: #fff;
@@ -352,7 +350,6 @@ main {
     cursor: pointer;
 }
 
-/* Close button on hover */
 .modal-content button:hover {
     background-color: #555;
 }
