@@ -224,12 +224,13 @@ function fetchCocktailsByCategory(category) {
         .then(resp => resp.json())
         .then(data => {
             // Display the drinks on the page without showing the category name
-            displayCocktails(data);
+            displayCocktails(data.drinks); // Pass the drinks array directly
         })
         .catch(error => {
             console.error(error);
         });
 }
+
 
 // Update the handleCategoryClick function
 function handleCategoryClick(selectedCategory) {
@@ -245,17 +246,6 @@ function handleCategoryClick(selectedCategory) {
 
     // Display selected category
     displaySelectedCategory(selectedCategory);
-}
-
-// Function to display selected category
-function displaySelectedCategory(selectedCategory) {
-    // Create a heading element for the selected category
-    const selectedCategoryHeading = document.createElement('h2');
-    selectedCategoryHeading.textContent = `Selected Category: ${selectedCategory}`;
-
-    // Insert the heading above the categoryContent section
-    const categoryContentSection = document.getElementById('categoryContent');
-    categoryContentSection.parentNode.insertBefore(selectedCategoryHeading, categoryContentSection);
 }
 
 // Function to fetch featured cocktail
@@ -282,19 +272,13 @@ function displayFeaturedCocktail(cocktail) {
     featuredLabel.innerHTML = 'Featured Drink';
     featuredCocktail.appendChild(featuredLabel);
 
+    let imgContainer = document.createElement('div');
+    imgContainer.classList.add('img-container');
+
     let img = document.createElement('img');
     img.src = cocktail.drinks[0].strDrinkThumb;
 
-    featuredCocktail.appendChild(img);
-
-    let cocktailName = document.createElement('h4');
-    cocktailName.innerHTML = cocktail.drinks[0].strDrink;
-
-    featuredCocktail.appendChild(cocktailName);
-
-    // Modify the container for the "Get Recipe" button
-    let buttonContainer = document.createElement('div');
-    buttonContainer.classList.add('recipe-button-container');
+    imgContainer.appendChild(img);
 
     // Create a button
     let recipeButton = document.createElement('button');
@@ -304,12 +288,12 @@ function displayFeaturedCocktail(cocktail) {
     // Initially, hide the button
     recipeButton.style.display = 'none';
 
-    // Add a hover event listener to the featuredCocktail container
-    featuredCocktail.addEventListener('mouseenter', function () {
+    // Add a hover event listener to the imgContainer
+    imgContainer.addEventListener('mouseenter', function () {
         recipeButton.style.display = 'block';
     });
 
-    featuredCocktail.addEventListener('mouseleave', function () {
+    imgContainer.addEventListener('mouseleave', function () {
         recipeButton.style.display = 'none';
     });
 
@@ -319,11 +303,16 @@ function displayFeaturedCocktail(cocktail) {
         displayRecipe(cocktail.drinks[0].idDrink);
     });
 
-    // Append the button to the container
-    buttonContainer.appendChild(recipeButton);
+    // Append the button to the imgContainer
+    imgContainer.appendChild(recipeButton);
 
-    // Append the button container to the featuredCocktail container
-    featuredCocktail.appendChild(buttonContainer);
+    // Append the imgContainer to the featuredCocktail container
+    featuredCocktail.appendChild(imgContainer);
+
+    let cocktailName = document.createElement('h4');
+    cocktailName.innerHTML = cocktail.drinks[0].strDrink;
+
+    featuredCocktail.appendChild(cocktailName);
 }
 
 // Function to display cocktails
@@ -332,8 +321,14 @@ function displayCocktails(cocktails) {
     const categoryContent = document.getElementById('categoryContent');
     categoryContent.innerHTML = '';
 
-    // Loop through the drinks and display them on the page
-    cocktails.drinks.forEach(drink => {
+    // Remove the "Selected Category" heading if it exists
+    const selectedCategoryHeading = document.querySelector('.selected-category-heading');
+    if (selectedCategoryHeading) {
+        selectedCategoryHeading.parentNode.removeChild(selectedCategoryHeading);
+    }
+
+    // Loop through the first 15 drinks and display them on the page
+    cocktails.slice(0, 15).forEach(drink => {
         const drinkCard = document.createElement('div');
         drinkCard.classList.add('drink-card');
 

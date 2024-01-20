@@ -4,8 +4,8 @@
     box-sizing: border-box;
     text-decoration: none;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-
 }
+
 body {
     background: linear-gradient(to bottom, #000000, #5151f5);
     overflow-x: hidden;
@@ -14,7 +14,7 @@ body {
 
 h2, h3 {
     text-align: center;
-    color: #fff; 
+    color: #fff;
 }
 
 /* Styling everything in the header */
@@ -155,20 +155,51 @@ header .search {
 
 /* Style the featured cocktail */
 #featuredCocktail {
-    margin-top: 50px;
-    text-align: center;
+    max-width: 400px; 
+    margin: 0 auto; 
+    text-align: center; 
 }
-
-#featuredCocktail img {
-    max-width: 100%;
-    border-radius: 8px;
-}
-
-.recipe-button-container {
+.img-container {
     position: relative;
-    top: 50%;
-    transform: translateY(-50%);
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.img-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.img-container button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0; 
+    transition: opacity 0.3s; 
+}
+
+.img-container:hover img {
+    transform: scale(1.1);
+}
+
+.img-container:hover button {
+    opacity: 1; 
+}
+
+#featuredCocktail h4 {
+    margin-top: 10px; 
+    margin-top: 10px;
+} 
 
 /* style the categories section */
 .categories-section {
@@ -200,34 +231,44 @@ header .search {
 }
 
 .drink-card {
-    width: 23%; 
+    width: 30%; 
     margin-bottom: 20px; 
     box-sizing: border-box;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
 }
 
 .drink-card img {
-    width: 100%;
+    max-width: 100%;
     height: auto;
     border-radius: 8px;
-    margin-bottom: 10px;
 }
 
 .drink-card h4 {
-    font-size: 1.2em;
-    color: #fff;
-    margin-bottom: 5px;
+    font-size: 18px;
+    margin: 10px 0;
 }
 
 .drink-card button {
-    background-color: #333;
+    background-color: #4CAF50;
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 8px 16px;
+    border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.drink-card:hover {
+    transform: scale(1.05);
 }
 
 .drink-card:hover button {
-    opacity: 1; 
+    background-color: #45a049;
 }
 
 /* Styles for the dropdown container */
@@ -258,12 +299,6 @@ header .search {
 /* Show the dropdown when hovering over the 'Categories' link */
 .navbar:hover .dropdown:hover .dropdown-menu {
     display: block;
-}
-
-/* Add this CSS to your existing styles */
-
-.drink-card {
-    position: relative; 
 }
 
 .drink-card button {
@@ -362,12 +397,12 @@ main {
 .subscription-content {
     max-width: 400px;
     margin: 0 auto;
-    color: #fff; /* Text color is white */
+    color: #fff; 
 }
 
 #subscriptionForm {
     max-width: 400px;
-    margin: 20px auto; /* Add margin between the content and the form */
+    margin: 20px auto; 
     background-color: rgb(34, 7, 95);
     padding: 20px;
     border-radius: 8px;
@@ -384,10 +419,10 @@ main {
     padding: 10px;
     margin-bottom: 16px;
     box-sizing: border-box;
-    border: 1px solid #fff; /* Add a border for better visibility */
+    border: 1px solid #fff; 
     border-radius: 4px;
-    background-color: #fff; /* Keep the input box white */
-    color: #333; /* Text color for input box */
+    background-color: #fff; 
+    color: #333; 
 }
 
 #subscriptionForm button {
@@ -407,7 +442,7 @@ main {
 #subscriptionForm p {
     font-size: 16px;
     margin-top: 20px;
-    color: #fff; /* Set the text color to white */
+    color: #fff; 
 }
 
 /* Footer */
@@ -447,6 +482,54 @@ footer {
     font-size: 14px;
 }
 
+@media (max-width: 800px) 
+{
+    .searchBtn {
+        left: 0;
+    }
+    .searchBox {
+        padding: 0 10px; 
+    }
+    .menuToggle {
+        position: absolute;
+        display: block;
+        font-size: 2em;
+        cursor: pointer;
+        left: 20px;
+        top: 10px;
+        z-index: 10;
+    }
+    header {
+        padding: 20px;
+    }
+    header .navbar {
+        position: absolute;
+        opacity: 0;
+        visibility: hidden;
+        left: 100%;
+        top: 80px;
+    }
+    header.open .navbar {
+        top: 80px;
+        opacity: 1;
+        visibility: visible;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        width: 100%;
+        height: calc(100vh - 80px);
+        padding: 20px;
+        border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    header.open .navbar li a {
+        font-size: 1.25em;
+    }
+    .hide {
+        display: none;
+    }
+    
+}
 
 
 
