@@ -57,6 +57,7 @@ function handleSearch() {
 
 // Function to fetch and display search results
 function fetchAndDisplaySearchResults(searchTerm) {
+    
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`)
         .then(resp => resp.json())
         .then(data => {
@@ -82,16 +83,9 @@ function displayRecipeDetails(cocktail) {
     const modalContent = document.createElement('div');
     modalContent.classList.add('modal-content');
 
-    // Add a close button to the modal
-    const closeButton = document.createElement('button');
-    closeButton.textContent = 'Close';
-    closeButton.addEventListener('click', () => {
-        // Remove the modal when the close button is clicked
-        document.body.removeChild(modalContainer);
-    });
-
     // Display detailed recipe information in the modal
     const modalContentHTML = `
+        <button class="close-button"><i class="fas fa-times"></i></button>
         <img src="${cocktail.strDrinkThumb}" alt="${cocktail.strDrink}" class="modal-image">
         <h2>${cocktail.strDrink}</h2>
         <h3>Ingredients</h3>
@@ -104,12 +98,18 @@ function displayRecipeDetails(cocktail) {
 
     modalContent.innerHTML = modalContentHTML;
 
-    // Append the close button and modal content to the modal container
-    modalContainer.appendChild(closeButton);
+    // Append the modal content to the modal container
     modalContainer.appendChild(modalContent);
 
     // Append the modal container to the body
     document.body.appendChild(modalContainer);
+
+    const closeButton = document.querySelector('.close-button');
+    closeButton.addEventListener('click', (event) => {
+        event.preventDefault();
+        // Remove the modal when the close button is clicked
+        document.body.removeChild(modalContainer);
+});
 }
 
 // Function to generate ingredients list
@@ -369,6 +369,13 @@ function displayRecipe(drinkId) {
             console.error(error);
         });
 }
+
+// Function to display selected category
+function displaySelectedCategory(selectedCategory) {
+    // Add your logic to display the selected category, e.g., update UI or perform actions
+    console.log(`Selected Category: ${selectedCategory}`);
+}
+
 
 // Event listener for subscription form submission
 document.getElementById('subscriptionForm').addEventListener('submit', function (event) {

@@ -231,8 +231,10 @@ header .search {
 }
 
 .drink-card {
-    width: 30%; 
-    margin-bottom: 20px; 
+    width: calc(30% - 20px);
+    margin-bottom: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
     box-sizing: border-box;
     border: 1px solid #ccc;
     padding: 10px;
@@ -365,20 +367,35 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     max-width: 600px;
     width: 100%;
-    text-align: left; 
+    text-align: left;
     color: white;
+    position: relative; /* Added for positioning the close button */
 }
 
 .modal-image {
     width: 80%;
-    max-width: 300px; 
+    max-width: 300px;
     height: auto;
     border-radius: 8px;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px; /* Adjusted top position */
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 2em;
+    color: #fff;
+}
+
+.close-button:hover {
+    color: #ccc; /* Adjust the color on hover */
 }
 
 .modal-content button {
-    background-color: #333;
     color: #fff;
     border: none;
     padding: 10px 15px;
@@ -386,9 +403,8 @@ main {
 }
 
 .modal-content button:hover {
-    background-color: #555;
+    color: #000000;
 }
-
 /* subscription */
 #subscriptionSection {
     text-align: center;
